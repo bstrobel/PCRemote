@@ -1,0 +1,45 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Atmel Studio Solution File, Format Version 11.00
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "PS2KBDevice", "PS2KBDevice\PS2KBDevice.cproj", "{DCE6C7E3-EE26-4D79-826B-08594B9AD897}"
+EndProject
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "IRReceiver", "IRReceiver\IRReceiver.cproj", "{38A82BEE-9520-4357-806E-6C3E12505D1A}"
+EndProject
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "PCRemote", "PCRemote\PCRemote.cproj", "{322FA4E5-8A86-441F-B0E2-EECD82CE6E7D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FA743DB3-927F-40B6-AFCF-5D872D1E8A7B} = {FA743DB3-927F-40B6-AFCF-5D872D1E8A7B}
+		{DCE6C7E3-EE26-4D79-826B-08594B9AD897} = {DCE6C7E3-EE26-4D79-826B-08594B9AD897}
+		{38A82BEE-9520-4357-806E-6C3E12505D1A} = {38A82BEE-9520-4357-806E-6C3E12505D1A}
+	EndProjectSection
+EndProject
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "UART", "UART\UART.cproj", "{FA743DB3-927F-40B6-AFCF-5D872D1E8A7B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|AVR = Debug|AVR
+		Release|AVR = Release|AVR
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DCE6C7E3-EE26-4D79-826B-08594B9AD897}.Debug|AVR.ActiveCfg = Debug|AVR
+		{DCE6C7E3-EE26-4D79-826B-08594B9AD897}.Debug|AVR.Build.0 = Debug|AVR
+		{DCE6C7E3-EE26-4D79-826B-08594B9AD897}.Release|AVR.ActiveCfg = Release|AVR
+		{DCE6C7E3-EE26-4D79-826B-08594B9AD897}.Release|AVR.Build.0 = Release|AVR
+		{38A82BEE-9520-4357-806E-6C3E12505D1A}.Debug|AVR.ActiveCfg = Debug|AVR
+		{38A82BEE-9520-4357-806E-6C3E12505D1A}.Debug|AVR.Build.0 = Debug|AVR
+		{38A82BEE-9520-4357-806E-6C3E12505D1A}.Release|AVR.ActiveCfg = Release|AVR
+		{38A82BEE-9520-4357-806E-6C3E12505D1A}.Release|AVR.Build.0 = Release|AVR
+		{322FA4E5-8A86-441F-B0E2-EECD82CE6E7D}.Debug|AVR.ActiveCfg = Debug|AVR
+		{322FA4E5-8A86-441F-B0E2-EECD82CE6E7D}.Debug|AVR.Build.0 = Debug|AVR
+		{322FA4E5-8A86-441F-B0E2-EECD82CE6E7D}.Release|AVR.ActiveCfg = Release|AVR
+		{322FA4E5-8A86-441F-B0E2-EECD82CE6E7D}.Release|AVR.Build.0 = Release|AVR
+		{FA743DB3-927F-40B6-AFCF-5D872D1E8A7B}.Debug|AVR.ActiveCfg = Debug|AVR
+		{FA743DB3-927F-40B6-AFCF-5D872D1E8A7B}.Debug|AVR.Build.0 = Debug|AVR
+		{FA743DB3-927F-40B6-AFCF-5D872D1E8A7B}.Release|AVR.ActiveCfg = Release|AVR
+		{FA743DB3-927F-40B6-AFCF-5D872D1E8A7B}.Release|AVR.Build.0 = Release|AVR
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
