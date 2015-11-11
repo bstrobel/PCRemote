@@ -66,7 +66,8 @@ ADDITIONAL_DEPENDENCIES:=
 
 OUTPUT_FILE_DEP:= ./makedep.mk
 
-LIB_DEP+= 
+LIB_DEP+=  \
+C:/Users/Bernd/Documents/Atmel\ Studio/7.0/DebugLogger/DebugLogger/Debug/libDebugLogger.a
 
 LINKER_SCRIPT_DEP+= 
 

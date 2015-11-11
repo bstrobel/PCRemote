@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include "PS2KBDevice.h"
+#include "../../DebugLogger/DebugLogger/debug_logger.h"
 
 
 #define ENABLE_PCINT_DATA PCMSK0 |= _BV(_data_pin_port_b)
@@ -125,8 +126,10 @@ static bool _put_char_into_rcv_buf(char c) {
 static char _get_char_from_rcv_buf()
 {
 	cli();
-	if (_recv_buf_len == 0)
+	if (_recv_buf_len == 0) {
+		sei();
 		return 0x0;
+	}
 	char c = _recv_buf[_recv_buf_head];
 	_recv_buf_head++;
 	_recv_buf_len--;
@@ -139,8 +142,10 @@ static char _get_char_from_rcv_buf()
 // returning a 0 means buffer is full
 static bool _put_char_into_snd_buf(char c) {
 	cli();
-	if (_send_buf_len >= SND_BUF_SIZE)
+	if (_send_buf_len >= SND_BUF_SIZE) {
+		sei();
 		return false;
+	}
 	uint8_t i = _send_buf_head + _send_buf_len;
 	if (i >= SND_BUF_SIZE)
 		i -= SND_BUF_SIZE;
@@ -162,6 +167,7 @@ static inline char _get_char_from_snd_buf()
 static void _remove_char_from_snd_buf() {
 	cli();
 	if (_send_buf_len == 0) { // just to make sure...
+		sei();
 		return;
 	}
 	_send_buf_head++;
@@ -383,16 +389,16 @@ void do_ps2device_work() {
 	while (_recv_buf_len > 0) {
 		_clear_send_buf();
 		if (_recv_buf_overflow) {
-			//printf"_recv_buf overflow!\n");
+			debug_log("_recv_buf overflow\r\n");
 			_recv_buf_overflow = false;
 		}
 		uint8_t c = _get_char_from_rcv_buf();
 		if (c < 0b11000000 && (_next_byte_led || _next_byte_typematic_rate)) {
 			if (_next_byte_typematic_rate) {
-				//printf"Typematic Rate: 0x%x\n",c);
+				debug_log("Typematic Rate val\r\n");
 			}
 			if (_next_byte_led) {
-				//printf"LED string: 0x%x\n",c);
+				debug_log("LED val\r\n");
 			}
 			_next_byte_led = _next_byte_typematic_rate = false;
 			return;
@@ -400,17 +406,17 @@ void do_ps2device_work() {
 		switch (c) {
 			case PS2HOST_CMD_ECHO:
 				_send_char_to_host(PS2DEVICE_CMD_ECHO);
-				//printf"Echo!\n");
+				debug_log("Echo\r\n");
 				return;
 			case PS2HOST_CMD_RESEND:
 				//we don't care - so we send just an ack
 				_send_char_to_host(PS2DEVICE_CMD_ACK);
-				//printf"Resend requested!\n");
+				debug_log("Resend requested!\r\n");
 				continue;
 			case PS2HOST_CMD_RESET:
 				_send_char_to_host(PS2DEVICE_CMD_ACK);
 				_reset_state();
-				//printf"Reset requested!\n");
+				debug_log("Reset requested\r\n");
 				return;
 			case PS2HOST_CMD_SET_KEY_TYPE_MAKE:
 			case PS2HOST_CMD_SET_KEY_TYPE_MAKE_BREAK:
@@ -421,34 +427,37 @@ void do_ps2device_work() {
 			case PS2HOST_CMD_SET_ALL_KEYS_TYPEMATIC:
 				// this is generally not the correct handling but we dont care.
 				_send_char_to_host(PS2DEVICE_CMD_ACK);
-				//printf"One of the set make/break/typematic received! c=0x%x\n", c);
+				debug_log("Set make/break/typematic received\r\n");
 				return;
 			case PS2HOST_CMD_SET_TYPEMATIC_RATE_DELAY:
 				_next_byte_typematic_rate = true;
+				debug_log("Typematic Rate next\r\n");
 				continue;
 			case PS2HOST_CMD_SET_RESET_LEDS:
 				_next_byte_led = true;
+				debug_log("LED next\r\n");
 				continue;
 			case PS2HOST_CMD_READ_ID:
 				_send_char_to_host(PS2DEVICE_ID_1);
 				_send_char_to_host(PS2DEVICE_ID_2);
+				debug_log("Send Id requested\r\n");
 				//printf"Send Id requested!\n");
 				return;
 			case PS2HOST_CMD_SET_DEFAULT:
 				_send_char_to_host(PS2DEVICE_CMD_ACK);
-				//printf"Set default!\n");
+				debug_log("Set default\r\n");
 				return;
 			case PS2HOST_CMD_DISABLE:
 				_ps2dev_enabled = false;
 				_next_byte_led = _next_byte_typematic_rate = false;
-				//printf"Device disabled!\n");
+				debug_log("Device disabled\r\n");
 				return;
 			case PS2HOST_CMD_ENABLE:
 				_ps2dev_enabled = true;
-				//printf"Device enabled!\n");
+				debug_log("Device enabled\r\n");
 				return;
 			default:
-				//printf"Unrecognized command received! c=0x%x\n", c);
+				debug_log("Unrecognized command received\r\n");
 				break;
 		}
 	}	

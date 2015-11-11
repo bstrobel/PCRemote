@@ -69,7 +69,7 @@ ISR(TIMER_INTR_NAME)
 			if (irdata == MARK) { // reset gap timer
 				irparams.timer = 0;
 			}
-		break;
+			break;
 	}
 
 #ifdef BLINK_LED
@@ -111,7 +111,7 @@ bool decodeHashIRRecv(volatile decode_results_t *results) {
   results->rawbuf = irparams.rawbuf;
   results->rawlen = irparams.rawlen;
   // Require at least 6 samples to prevent triggering on noise
-  if (results->rawlen < 6) {
+  if (results->rawlen < 6 || irparams.rcvstate != STATE_STOP) {
     return ERR;
   }
   long hash = FNV_BASIS_32;

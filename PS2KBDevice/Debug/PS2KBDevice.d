@@ -16,7 +16,8 @@ PS2KBDevice.d PS2KBDevice.o: .././PS2KBDevice.c \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\4.9.2\include\stdarg.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\4.9.2\include\stddef.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\4.9.2\include\stdbool.h \
- .././PS2KBDevice.h .././PS2HostCmds.h .././PS2DevCodes.h
+ .././PS2KBDevice.h .././PS2HostCmds.h .././PS2DevCodes.h \
+ .././../../DebugLogger/DebugLogger/debug_logger.h
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\interrupt.h:
 
@@ -57,3 +58,5 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\
 .././PS2HostCmds.h:
 
 .././PS2DevCodes.h:
+
+.././../../DebugLogger/DebugLogger/debug_logger.h:

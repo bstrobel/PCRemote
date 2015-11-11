@@ -5,25 +5,22 @@
  * Author : Bernd
  */ 
 #define F_CPU 8000000UL
-#define UART_BAUD  9600
+#define LOG_BUF_SIZE 512
 
 #include <avr/io.h>
 #include <util/delay.h>
 #include <stdio.h>
-#include "../UART/uart.h"
 #include "../PS2KBDevice/PS2KBDevice.h"
 #include "../IRReceiver/IRReceiver.h"
+#include "../../DebugLogger/DebugLogger/debug_logger.h"
 
-FILE uart_str = FDEV_SETUP_STREAM(uart_putchar, uart_getchar, _FDEV_SETUP_RW);
 volatile decode_results_t decode_results;
 
 int main(void)
 {
-
-	uart_init();
+	init_debug_log();
 	enableIRRecv();
 	setup_ps2device(PINB2, PINB1);
-	stdin = stdout = &uart_str;
 	DDRB &= ~_BV(DDB0); // data direction input for B0
 	PORTB |= _BV(PORTB0); // enable pullup
 	DDRD &= ~(_BV(DDD7) | _BV(DDD6) | _BV(DDD5));
@@ -34,38 +31,42 @@ int main(void)
 		do_ps2device_work();
 		if (decodeHashIRRecv(&decode_results)) {
 			resumeIRRecv();
-			printf("Received bytes %d\n",decode_results.rawlen);
+			char strbuf1[30];
+			sprintf(strbuf1,"-R:%d\r\n",decode_results.rawlen);
+			debug_log(strbuf1);
 			for (int i = 0; i< decode_results.rawlen; i++)
 			{
-				printf("rawbuf[%d] %#x\n",i,decode_results.rawbuf[i]);
+				sprintf(strbuf1, "%d,",decode_results.rawbuf[i]);
+				debug_log(strbuf1);
 			}
+			debug_log("\r\n");
 		}
 		if (bit_is_clear(PINB,PINB0)) {
-			printf("Make U ARROW\n");
+			debug_log("Make U ARROW\r\n");
 			SEND_EXT_MAKE(PS2DC_U_ARROW_EXT);
 			_delay_ms(100);
-			printf("Break U ARROW\n");
+			debug_log("Break U ARROW\r\n");
 			SEND_EXT_BREAK(PS2DC_U_ARROW_EXT);
 		}
 		if (bit_is_clear(PIND,PIND7)) {
-			printf("Make D ARROW\n");
+			debug_log("Make D ARROW\r\n");
 			SEND_EXT_MAKE(PS2DC_D_ARROW_EXT);
 			_delay_ms(100);
-			printf("Break D ARROW\n");
+			debug_log("Break D ARROW\r\n");
 			SEND_EXT_BREAK(PS2DC_D_ARROW_EXT);
 		}
 		if (bit_is_clear(PIND,PIND6)) {
-			printf("Make R ARROW\n");
+			debug_log("Make R ARROW\r\n");
 			SEND_EXT_MAKE(PS2DC_R_ARROW_EXT);
 			_delay_ms(100);
-			printf("Break R ARROW\n");
+			debug_log("Break R ARROW\r\n");
 			SEND_EXT_BREAK(PS2DC_R_ARROW_EXT);
 		}
 		if (bit_is_clear(PIND,PIND5)) {
-			printf("Make L ARROW\n");
+			debug_log("Make L ARROW\r\n");
 			SEND_EXT_MAKE(PS2DC_L_ARROW_EXT);
 			_delay_ms(100);
-			printf("Break L ARROW\n");
+			debug_log("Break L ARROW\r\n");
 			SEND_EXT_BREAK(PS2DC_L_ARROW_EXT);
 		}
 		//_delay_ms(100);

@@ -29,15 +29,15 @@
     <ExternalProgrammingToolCommand />
     <AsfFrameworkConfig>
       <framework-data xmlns="">
-  <options />
-  <configurations />
-  <files />
-  <documentation help="" />
-  <offline-documentation help="" />
-  <dependencies>
-    <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.27.3" />
-  </dependencies>
-</framework-data>
+        <options />
+        <configurations />
+        <files />
+        <documentation help="" />
+        <offline-documentation help="" />
+        <dependencies>
+          <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.27.3" />
+        </dependencies>
+      </framework-data>
     </AsfFrameworkConfig>
     <avrtool>com.atmel.avrdbg.tool.stk500</avrtool>
     <avrtoolserialnumber />
@@ -135,6 +135,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\DebugLogger\DebugLogger\DebugLogger.cproj">
+      <Name>DebugLogger</Name>
+      <Project>{db5d1894-f8a7-4497-9b6f-8a964ecad356}</Project>
+      <Private>True</Private>
+    </ProjectReference>
     <ProjectReference Include="..\IRReceiver\IRReceiver.cproj">
       <Name>IRReceiver</Name>
       <Project>{38a82bee-9520-4357-806e-6c3e12505d1a}</Project>
@@ -143,11 +148,6 @@
     <ProjectReference Include="..\PS2KBDevice\PS2KBDevice.cproj">
       <Name>PS2KBDevice</Name>
       <Project>{dce6c7e3-ee26-4d79-826b-08594b9ad897}</Project>
-      <Private>True</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\UART\UART.cproj">
-      <Name>UART</Name>
-      <Project>{fa743db3-927f-40b6-afcf-5d872d1e8a7b}</Project>
       <Private>True</Private>
     </ProjectReference>
   </ItemGroup>
