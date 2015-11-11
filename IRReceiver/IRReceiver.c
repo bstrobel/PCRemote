@@ -9,11 +9,14 @@
 #include "IRReceiver.h"
 
 
+static volatile irparams_t irparams;
+
 // TIMER2 interrupt code to collect raw data.
 // Widths of alternating SPACE, MARK are recorded in rawbuf.
 // Recorded in ticks of 50 microseconds.
 // rawlen counts the number of entries recorded so far.
 // First entry is the SPACE between transmissions.
+//    -> we don't need that at all. carries no information since the counter overflows without detection
 // As soon as a SPACE gets long, ready is set, state switches to IDLE, timing of SPACE continues.
 // As soon as first MARK arrives, gap width is recorded, ready is cleared, and new logging starts
 ISR(TIMER_INTR_NAME)
@@ -36,7 +39,7 @@ ISR(TIMER_INTR_NAME)
 				else {
 					// gap just ended, record duration and start recording transmission
 					irparams.rawlen = 0;
-					irparams.rawbuf[irparams.rawlen++] = irparams.timer;
+					//irparams.rawbuf[irparams.rawlen++] = irparams.timer;
 					irparams.timer = 0;
 					irparams.rcvstate = STATE_MARK;
 				}
@@ -86,12 +89,16 @@ ISR(TIMER_INTR_NAME)
 
 // Compare two tick values, returning 0 if newval is shorter,
 // 1 if newval is equal, and 2 if newval is longer
-// Use a tolerance of 20%
+// ----Use a tolerance of 20%
+// ++++To avoid fp multiplication use an integer tolerance and substract it
+// ++++Values are in the range of 7..30 (except lead-in which is 55)
 int compare(unsigned int oldval, unsigned int newval) {
-	if (newval < oldval * .8) {
+//	if (newval < oldval * .8) {
+	if (newval < oldval - 4) {
 		return 0;
 	}
-	else if (oldval < newval * .8) {
+//	else if (oldval < newval * .8) {
+	else if (oldval < newval - 4) {
 		return 2;
 	}
 	else {
@@ -110,25 +117,27 @@ int compare(unsigned int oldval, unsigned int newval) {
 bool decodeHashIRRecv(volatile decode_results_t *results) {
   results->rawbuf = irparams.rawbuf;
   results->rawlen = irparams.rawlen;
-  // Require at least 6 samples to prevent triggering on noise
-  if (results->rawlen < 6 || irparams.rcvstate != STATE_STOP) {
-    return ERR;
+  if (irparams.rcvstate != STATE_STOP)
+  {
+	 return NO_DATA; 
+  }
+  if (results->rawlen < 5 && irparams.rcvstate == STATE_STOP) {
+	  	irparams.rcvstate = STATE_IDLE;
+	  	irparams.rawlen = 0;
+		return NO_DATA;
   }
   long hash = FNV_BASIS_32;
-  for (int i = 1; i+2 < results->rawlen; i++) {
+  for (int i = 0; i+2 < results->rawlen; i++) {
     int value =  compare(results->rawbuf[i], results->rawbuf[i+2]);
     // Add value into the hash
     hash = (hash * FNV_PRIME_32) ^ value;
   }
   results->value = hash;
   results->bits = 32;
-  results->decode_type = UNKNOWN;
-  return DECODED;
-}
-
-void resumeIRRecv() {
+  results->decode_type = HASH;
 	irparams.rcvstate = STATE_IDLE;
 	irparams.rawlen = 0;
+  return DECODED;
 }
 
 // initialization

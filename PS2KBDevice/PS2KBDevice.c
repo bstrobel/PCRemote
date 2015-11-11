@@ -33,7 +33,7 @@
 #define BIT_1_INDEX BIT_2_INDEX + 1
 #define BIT_0_INDEX BIT_1_INDEX + 1
 
-#define RCV_BUF_SIZE 16
+#define RCV_BUF_SIZE 1
 #define SND_BUF_SIZE 16
 static volatile char _recv_buf[RCV_BUF_SIZE];
 static volatile char _send_buf[SND_BUF_SIZE];
@@ -377,6 +377,7 @@ static void _reset_state() {
 	_clear_send_buf();
 	sei();
 	_send_char_to_host(PS2DEVICE_BAT_OK);
+	debug_log("<BAT_OK\r\n");
 }
 
 void setup_ps2device(uint8_t clock_pin_port_b, uint8_t data_pin_port_b) {
@@ -389,34 +390,37 @@ void do_ps2device_work() {
 	while (_recv_buf_len > 0) {
 		_clear_send_buf();
 		if (_recv_buf_overflow) {
-			debug_log("_recv_buf overflow\r\n");
+			debug_log("_recv_buf oflw\r\n");
 			_recv_buf_overflow = false;
 		}
 		uint8_t c = _get_char_from_rcv_buf();
 		if (c < 0b11000000 && (_next_byte_led || _next_byte_typematic_rate)) {
 			if (_next_byte_typematic_rate) {
-				debug_log("Typematic Rate val\r\n");
+				debug_log(">TypemR v\r\n");
 			}
 			if (_next_byte_led) {
-				debug_log("LED val\r\n");
+				debug_log(">LED v\r\n");
 			}
 			_next_byte_led = _next_byte_typematic_rate = false;
 			return;
 		}
 		switch (c) {
 			case PS2HOST_CMD_ECHO:
+				debug_log(">Echo\r\n");
 				_send_char_to_host(PS2DEVICE_CMD_ECHO);
-				debug_log("Echo\r\n");
+				debug_log("<Echo\r\n");
 				return;
 			case PS2HOST_CMD_RESEND:
 				//we don't care - so we send just an ack
+				debug_log(">Resend\r\n");
 				_send_char_to_host(PS2DEVICE_CMD_ACK);
-				debug_log("Resend requested!\r\n");
+				debug_log("<ACK\r\n");
 				continue;
 			case PS2HOST_CMD_RESET:
+				debug_log(">Reset\r\n");
 				_send_char_to_host(PS2DEVICE_CMD_ACK);
+				debug_log("<ACK\r\n");
 				_reset_state();
-				debug_log("Reset requested\r\n");
 				return;
 			case PS2HOST_CMD_SET_KEY_TYPE_MAKE:
 			case PS2HOST_CMD_SET_KEY_TYPE_MAKE_BREAK:
@@ -426,38 +430,49 @@ void do_ps2device_work() {
 			case PS2HOST_CMD_SET_ALL_KEYS_MAKE_BREAK:
 			case PS2HOST_CMD_SET_ALL_KEYS_TYPEMATIC:
 				// this is generally not the correct handling but we dont care.
+				debug_log(">Set m/b/t\r\n");
 				_send_char_to_host(PS2DEVICE_CMD_ACK);
-				debug_log("Set make/break/typematic received\r\n");
+				debug_log("<ACK\r\n");
 				return;
 			case PS2HOST_CMD_SET_TYPEMATIC_RATE_DELAY:
 				_next_byte_typematic_rate = true;
-				debug_log("Typematic Rate next\r\n");
+				debug_log(">TypemR n\r\n");
+				_send_char_to_host(PS2DEVICE_CMD_ACK);
+				debug_log("<ACK\r\n");
 				continue;
 			case PS2HOST_CMD_SET_RESET_LEDS:
 				_next_byte_led = true;
-				debug_log("LED next\r\n");
+				debug_log(">LED n\r\n");
+				_send_char_to_host(PS2DEVICE_CMD_ACK);
+				debug_log("<ACK\r\n");
 				continue;
 			case PS2HOST_CMD_READ_ID:
+				debug_log(">SendId\r\n");
 				_send_char_to_host(PS2DEVICE_ID_1);
+				debug_log("<ID1\r\n");
 				_send_char_to_host(PS2DEVICE_ID_2);
-				debug_log("Send Id requested\r\n");
-				//printf"Send Id requested!\n");
+				debug_log("<ID2\r\n");
 				return;
 			case PS2HOST_CMD_SET_DEFAULT:
+				debug_log(">Default\r\n");
 				_send_char_to_host(PS2DEVICE_CMD_ACK);
-				debug_log("Set default\r\n");
+				debug_log("<ACK\r\n");
 				return;
 			case PS2HOST_CMD_DISABLE:
 				_ps2dev_enabled = false;
 				_next_byte_led = _next_byte_typematic_rate = false;
-				debug_log("Device disabled\r\n");
+				debug_log(">Disable\r\n");
+				_send_char_to_host(PS2DEVICE_CMD_ACK);
+				debug_log("<ACK\r\n");
 				return;
 			case PS2HOST_CMD_ENABLE:
 				_ps2dev_enabled = true;
-				debug_log("Device enabled\r\n");
+				debug_log(">Enable\r\n");
+				_send_char_to_host(PS2DEVICE_CMD_ACK);
+				debug_log("<ACK\r\n");
 				return;
 			default:
-				debug_log("Unrecognized command received\r\n");
+				debug_log(">???\r\n");
 				break;
 		}
 	}	

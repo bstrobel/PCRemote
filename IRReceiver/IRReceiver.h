@@ -59,8 +59,8 @@
 
 
 
-#define UNKNOWN -1
-#define ERR false
+#define HASH -1
+#define NO_DATA false
 #define DECODED true
 
 
@@ -142,13 +142,7 @@ typedef struct {
 }
 decode_results_t;
 
-volatile irparams_t irparams;
-
 bool decodeHashIRRecv(volatile decode_results_t *results);
 void enableIRRecv();
-void resumeIRRecv();
-
-
-
 
 #endif /* IRRECEIVER_H_ */
