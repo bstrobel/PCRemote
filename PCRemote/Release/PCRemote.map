@@ -1,0 +1,6 @@
+Archive member included to satisfy reference by file (symbol)
+
+C:\Users\Bernd\Documents\Atmel Studio\7.0\DebugLogger\DebugLogger\Release\libDebugLogger.a(debug_logger.o)
+                              main.o (debug_log)
+C:\Users\Bernd\Documents\Atmel Studio\7.0\PCRemote\IRReceiver\Release\libIRReceiver.a(IRReceiver.o)
+                              main.o (decodeHashIRRecv)

@@ -60,34 +60,33 @@
 
 
 #define HASH -1
-#define NO_DATA false
-#define DECODED true
+typedef enum
+{
+    DECODED,
+    BUTTON_RELEASED,
+    IN_TRANSMISSION,
+    IDLE
+} DECODE_STATE;
 
 
 // Some useful constants
 
-#define USECPERTICK 50  // microseconds per clock interrupt tick
+#define MICROS_PER_TICK 50  // microseconds per clock interrupt tick
 #define RAWBUF 100 // Length of raw duration buffer
 
-// Marks tend to be 100us too long, and spaces 100us too short
-// when received due to sensor lag.
-#define MARK_EXCESS 100
-
-#define TOLERANCE 25  // percent tolerance in measurements
-#define LTOL (1.0 - TOLERANCE/100.)
-#define UTOL (1.0 + TOLERANCE/100.)
-
-#define _GAP 5000 // Minimum map between transmissions
-#define GAP_TICKS (_GAP/USECPERTICK)
-
-#define TICKS_LOW(us) (int) (((us)*LTOL/USECPERTICK))
-#define TICKS_HIGH(us) (int) (((us)*UTOL/USECPERTICK + 1))
+#define BUTTON_RELEASED_GAP_MICROS 150000UL // Time in microseconds after we decide that the button was released
+#define TRANSMISSION_GAP_MICROS 5000 // Minimum map between transmissions
+#define GAP_TICKS (TRANSMISSION_GAP_MICROS/MICROS_PER_TICK)
+#define BTN_RELEASE_GAP_TICKS (BUTTON_RELEASED_GAP_MICROS/MICROS_PER_TICK) 
 
 // receiver states
-#define STATE_IDLE     2
-#define STATE_MARK     3
-#define STATE_SPACE    4
-#define STATE_STOP     5
+typedef enum
+{
+    STATE_IDLE,
+    STATE_MARK,
+    STATE_SPACE,
+    STATE_TRANSMISSION_COMPLETED
+} IR_RECV_STATES;
 
 // IR detector output is active low
 #define MARK  0
@@ -97,27 +96,13 @@
 #define TIMER_RESET			 ({TCNT2 = 0; TIFR2 = 0;})
 #define TIMER_ENABLE_INTR    ({TIFR2 = 0; TIMSK2 = _BV(OCIE2A);})
 #define TIMER_DISABLE_INTR   (TIMSK2 = 0)
-#define TIMER_INTR_NAME      TIMER2_COMPA_vect
-#define TIMER_COUNT_TOP      (SYSCLOCK * USECPERTICK / 1000000) //should be 400 for 8MHz and 50usec
-
-// WGM21=1 -> CTC mode
-#if (TIMER_COUNT_TOP < 256)
-// CS20=1 -> SYSCLOCK without prescaling
-#  define TIMER_CONFIG_NORMAL() ({ \
-	TCCR2A = _BV(WGM21); \
-	TCCR2B = _BV(CS20); \
-	OCR2A = TIMER_COUNT_TOP; \
-	TCNT2 = 0; \
-})
-#else
-// CS21=1 -> SYSCLOCK/8
-#  define TIMER_CONFIG_NORMAL() ({ \
+#define TIMER_COUNT_TOP      (SYSCLOCK * MICROS_PER_TICK / 1000000) //should be 400 for 8MHz and 50usec
+#define TIMER_CONFIG_NORMAL() ({ \
 	TCCR2A = _BV(WGM21); \
 	TCCR2B = _BV(CS21); \
 	OCR2A = TIMER_COUNT_TOP / 8; \
 	TCNT2 = 0; \
 })
-#endif
 
 // information for the interrupt handler
 typedef struct {
@@ -131,18 +116,14 @@ irparams_t;
 // Results returned from the decoder
 typedef struct {
 	int decode_type; // (NEC, SONY, RC5,) UNKNOWN
-	union { // This is used for decoding Panasonic and Sharp data - so unused here.
-		unsigned int panasonicAddress;
-		unsigned int sharpAddress;
-	};
 	unsigned long value; // Decoded value
-	int bits; // Number of bits in decoded value
+	uint8_t bits; // Number of bits in decoded value
 	volatile unsigned int *rawbuf; // Raw intervals in .5 us ticks
-	int rawlen; // Number of records in rawbuf.
+	uint8_t rawlen; // Number of records in rawbuf.
 }
 decode_results_t;
 
-bool decodeHashIRRecv(volatile decode_results_t *results);
+DECODE_STATE decodeHashIRRecv(volatile decode_results_t *results);
 void enableIRRecv();
 
 #endif /* IRRECEIVER_H_ */

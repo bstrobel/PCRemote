@@ -17,6 +17,23 @@
 
 volatile decode_results_t decode_results;
 static char strbuf1[10];
+static unsigned long prev_ir_value = 0;
+
+static void send_make_for_ircode(unsigned long ircode)
+{
+			    debug_log("M 0x");
+			    sprintf(strbuf1,"%lx",decode_results.value);
+			    debug_log(strbuf1);
+			    debug_log("\r\n");
+}
+
+static void send_break_for_ircode(unsigned long ircode)
+{
+			    debug_log("B 0x");
+			    sprintf(strbuf1,"%lx",decode_results.value);
+			    debug_log(strbuf1);
+			    debug_log("\r\n");
+}
 
 int main(void)
 {
@@ -25,59 +42,51 @@ int main(void)
 	setup_ps2device(PINB2, PINB1);
 	DDRB &= ~_BV(DDB0); // data direction input for B0
 	PORTB |= _BV(PORTB0); // enable pullup
-	DDRD &= ~(_BV(DDD7) | _BV(DDD6) | _BV(DDD5));
-	PORTD |= _BV(PORTD7) | _BV(PORTD6) | _BV(PORTD5);
     while (1) 
     {
 		do_ps2device_work();
-		if (decodeHashIRRecv(&decode_results)) {
-			debug_log("-R:");
-			sprintf(strbuf1,"%d",decode_results.rawlen);
-			debug_log(strbuf1);
-			debug_log("\r\n");
-			for (int i = 0; i< decode_results.rawlen; i++)
-			{
-				sprintf(strbuf1, "%d",decode_results.rawbuf[i]);
-				debug_log(strbuf1);
-				if (i + 1 < decode_results.rawlen) {
-					debug_log(",");
-				}
-			}
-			debug_log("\r\n0x");
-			sprintf(strbuf1,"%lx",decode_results.value);
-			debug_log(strbuf1);
-			debug_log("\r\n");
-		}
+        switch(decodeHashIRRecv(&decode_results))
+        {
+            case DECODED:
+            {
+			    /*debug_log("-R:");
+			    sprintf(strbuf1,"%d",decode_results.rawlen);
+			    debug_log(strbuf1);
+			    debug_log("\r\n");
+			    for (int i = 0; i< decode_results.rawlen; i++)
+			    {
+				    sprintf(strbuf1, "%d",decode_results.rawbuf[i]);
+				    debug_log(strbuf1);
+				    if (i + 1 < decode_results.rawlen)
+                    {
+					    debug_log(",");
+				    }
+			    }*/
+                if (prev_ir_value && prev_ir_value != decode_results.value)
+                {
+                    send_break_for_ircode(prev_ir_value);
+                }
+                send_make_for_ircode(decode_results.value);
+                prev_ir_value = decode_results.value;
+                break;
+            }
+            case BUTTON_RELEASED:
+            {
+                send_break_for_ircode(prev_ir_value);
+                prev_ir_value = 0;
+                break;
+            }
+            default:
+            {
+                break;
+            }
+        }            
 		if (bit_is_clear(PINB,PINB0)) {
 			debug_log("Make U ARROW\r\n");
 			SEND_EXT_MAKE(PS2DC_U_ARROW_EXT);
 			_delay_ms(100);
 			debug_log("Break U ARROW\r\n");
 			SEND_EXT_BREAK(PS2DC_U_ARROW_EXT);
-			_delay_ms(100);
-		}
-		if (bit_is_clear(PIND,PIND7)) {
-			debug_log("Make D ARROW\r\n");
-			SEND_EXT_MAKE(PS2DC_D_ARROW_EXT);
-			_delay_ms(100);
-			debug_log("Break D ARROW\r\n");
-			SEND_EXT_BREAK(PS2DC_D_ARROW_EXT);
-			_delay_ms(100);
-		}
-		if (bit_is_clear(PIND,PIND6)) {
-			debug_log("Make R ARROW\r\n");
-			SEND_EXT_MAKE(PS2DC_R_ARROW_EXT);
-			_delay_ms(100);
-			debug_log("Break R ARROW\r\n");
-			SEND_EXT_BREAK(PS2DC_R_ARROW_EXT);
-			_delay_ms(100);
-		}
-		if (bit_is_clear(PIND,PIND5)) {
-			debug_log("Make L ARROW\r\n");
-			SEND_EXT_MAKE(PS2DC_L_ARROW_EXT);
-			_delay_ms(100);
-			debug_log("Break L ARROW\r\n");
-			SEND_EXT_BREAK(PS2DC_L_ARROW_EXT);
 			_delay_ms(100);
 		}
     }
