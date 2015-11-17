@@ -25,7 +25,7 @@
     <preserveEEPROM>true</preserveEEPROM>
     <OverrideVtorValue>exception_table</OverrideVtorValue>
     <BootSegment>2</BootSegment>
-    <eraseonlaunchrule>0</eraseonlaunchrule>
+    <eraseonlaunchrule>1</eraseonlaunchrule>
     <ExternalProgrammingToolCommand />
     <AsfFrameworkConfig>
       <framework-data xmlns="">
@@ -142,6 +142,18 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="main.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MCECodes.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MCEMapper.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MCEMapper.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MCEMapperHelper.h">
       <SubType>compile</SubType>
     </Compile>
   </ItemGroup>
