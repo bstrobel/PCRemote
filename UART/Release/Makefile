@@ -37,7 +37,7 @@ SUBDIRS :=
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
-../PS2KBDevice.c
+../uart.c
 
 
 PREPROCESSING_SRCS += 
@@ -47,27 +47,26 @@ ASM_SRCS +=
 
 
 OBJS +=  \
-PS2KBDevice.o
+uart.o
 
 OBJS_AS_ARGS +=  \
-PS2KBDevice.o
+uart.o
 
 C_DEPS +=  \
-PS2KBDevice.d
+uart.d
 
 C_DEPS_AS_ARGS +=  \
-PS2KBDevice.d
+uart.d
 
-OUTPUT_FILE_PATH +=libPS2KBDevice.a
+OUTPUT_FILE_PATH +=libUART.a
 
-OUTPUT_FILE_PATH_AS_ARGS +=libPS2KBDevice.a
+OUTPUT_FILE_PATH_AS_ARGS +=libUART.a
 
 ADDITIONAL_DEPENDENCIES:=
 
 OUTPUT_FILE_DEP:= ./makedep.mk
 
-LIB_DEP+=  \
-C:/Users/Bernd/Documents/Atmel\ Studio/7.0/DebugLogger/DebugLogger/Release/libDebugLogger.a
+LIB_DEP+= 
 
 LINKER_SCRIPT_DEP+= 
 
@@ -121,5 +120,5 @@ $(OUTPUT_FILE_PATH): $(OBJS) $(USER_OBJS) $(OUTPUT_FILE_DEP)
 clean:
 	-$(RM) $(OBJS_AS_ARGS) $(EXECUTABLES)  
 	-$(RM) $(C_DEPS_AS_ARGS)   
-	rm -rf "libPS2KBDevice.elf" "libPS2KBDevice.a" "libPS2KBDevice.hex" "libPS2KBDevice.lss" "libPS2KBDevice.eep" "libPS2KBDevice.map" "libPS2KBDevice.srec" "libPS2KBDevice.usersignatures"
+	rm -rf "libUART.elf" "libUART.a" "libUART.hex" "libUART.lss" "libUART.eep" "libUART.map" "libUART.srec" "libUART.usersignatures"
 	

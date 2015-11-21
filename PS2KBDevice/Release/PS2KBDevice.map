@@ -3,7 +3,7 @@ Archive member included to satisfy reference by file (symbol)
 C:\Users\Bernd\Documents\Atmel Studio\7.0\DebugLogger\DebugLogger\Release\libDebugLogger.a(debug_logger.o)
                               PS2KBDevice.o (debug_log)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr5\libgcc.a(_exit.o)
-                              C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.0.90/gcc/dev/atmega328p/avr5/crtatmega328p.o (exit)
+                              C:/Program Files (x86)/Atmel/Studio/7.0/Packs/Atmel/ATmega_DFP/1.0.91/gcc/dev/atmega328p/avr5/crtatmega328p.o (exit)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr5\libgcc.a(_tablejump2.o)
                               PS2KBDevice.o (__tablejump2__)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr5\libgcc.a(_copy_data.o)
@@ -13,8 +13,8 @@ c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/..
 
 Discarded input sections
 
- .data          0x00000000        0x0 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.0.90/gcc/dev/atmega328p/avr5/crtatmega328p.o
- .bss           0x00000000        0x0 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.0.90/gcc/dev/atmega328p/avr5/crtatmega328p.o
+ .data          0x00000000        0x0 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/Atmel/ATmega_DFP/1.0.91/gcc/dev/atmega328p/avr5/crtatmega328p.o
+ .bss           0x00000000        0x0 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/Atmel/ATmega_DFP/1.0.91/gcc/dev/atmega328p/avr5/crtatmega328p.o
  .text          0x00000000        0x0 PS2KBDevice.o
  .data          0x00000000        0x0 PS2KBDevice.o
  .bss           0x00000000        0x0 PS2KBDevice.o
@@ -132,7 +132,7 @@ user_signatures  0x00850000         0x00000400         rw !x
 Linker script and memory map
 
 Address of section .data set to 0x800100
-LOAD C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.0.90/gcc/dev/atmega328p/avr5/crtatmega328p.o
+LOAD C:/Program Files (x86)/Atmel/Studio/7.0/Packs/Atmel/ATmega_DFP/1.0.91/gcc/dev/atmega328p/avr5/crtatmega328p.o
 LOAD PS2KBDevice.o
 START GROUP
 LOAD c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr5\libm.a
@@ -142,7 +142,7 @@ START GROUP
 LOAD c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr5\libgcc.a
 LOAD c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr5\libm.a
 LOAD c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr5\libc.a
-LOAD C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.0.90/gcc/dev/atmega328p/avr5\libatmega328p.a
+LOAD C:/Program Files (x86)/Atmel/Studio/7.0/Packs/Atmel/ATmega_DFP/1.0.91/gcc/dev/atmega328p/avr5\libatmega328p.a
 END GROUP
 
 .hash
@@ -237,7 +237,7 @@ END GROUP
 
 .text           0x00000000      0x6a0
  *(.vectors)
- .vectors       0x00000000       0x68 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.0.90/gcc/dev/atmega328p/avr5/crtatmega328p.o
+ .vectors       0x00000000       0x68 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/Atmel/ATmega_DFP/1.0.91/gcc/dev/atmega328p/avr5/crtatmega328p.o
                 0x00000000                __vector_default
                 0x00000000                __vectors
  *(.vectors)
@@ -265,13 +265,13 @@ END GROUP
  SORT(*)(.ctors)
  SORT(*)(.dtors)
  *(.init0)
- .init0         0x0000007a        0x0 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.0.90/gcc/dev/atmega328p/avr5/crtatmega328p.o
+ .init0         0x0000007a        0x0 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/Atmel/ATmega_DFP/1.0.91/gcc/dev/atmega328p/avr5/crtatmega328p.o
                 0x0000007a                __init
  *(.init0)
  *(.init1)
  *(.init1)
  *(.init2)
- .init2         0x0000007a        0xc C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.0.90/gcc/dev/atmega328p/avr5/crtatmega328p.o
+ .init2         0x0000007a        0xc C:/Program Files (x86)/Atmel/Studio/7.0/Packs/Atmel/ATmega_DFP/1.0.91/gcc/dev/atmega328p/avr5/crtatmega328p.o
  *(.init2)
  *(.init3)
  *(.init3)
@@ -290,10 +290,10 @@ END GROUP
  *(.init8)
  *(.init8)
  *(.init9)
- .init9         0x000000ac        0x8 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.0.90/gcc/dev/atmega328p/avr5/crtatmega328p.o
+ .init9         0x000000ac        0x8 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/Atmel/ATmega_DFP/1.0.91/gcc/dev/atmega328p/avr5/crtatmega328p.o
  *(.init9)
  *(.text)
- .text          0x000000b4        0x4 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.0.90/gcc/dev/atmega328p/avr5/crtatmega328p.o
+ .text          0x000000b4        0x4 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/Atmel/ATmega_DFP/1.0.91/gcc/dev/atmega328p/avr5/crtatmega328p.o
                 0x000000b4                __vector_22
                 0x000000b4                __vector_1
                 0x000000b4                __vector_24
@@ -478,7 +478,7 @@ END GROUP
 .note.gnu.avr.deviceinfo
                 0x00000000       0x40
  .note.gnu.avr.deviceinfo
-                0x00000000       0x40 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.0.90/gcc/dev/atmega328p/avr5/crtatmega328p.o
+                0x00000000       0x40 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/Atmel/ATmega_DFP/1.0.91/gcc/dev/atmega328p/avr5/crtatmega328p.o
 
 .note.gnu.build-id
  *(.note.gnu.build-id)

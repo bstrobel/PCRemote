@@ -10,6 +10,7 @@
 
 #ifndef IRRECEIVER_H_
 #define IRRECEIVER_H_
+#include "../PCRemote/conf.h"
 
 #include <stdbool.h>
 
@@ -18,14 +19,6 @@
 #else
 #	define SYSCLOCK 8000000UL
 #endif
-
-#define IR_RECV_PORT_D
-#define IR_RECV_PIN PORTD2
-
-#define BLINK_LED
-
-#define BLINK_LED_PORT_C
-#define BLINK_LED_PIN PORTC5
 
 
 #ifdef IR_RECV_PORT_D

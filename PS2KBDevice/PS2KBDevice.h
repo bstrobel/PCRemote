@@ -8,6 +8,7 @@
 
 #ifndef PS2KBDEVICE_H_
 #define PS2KBDEVICE_H_
+#include "../PCRemote/conf.h"
 #include <avr/interrupt.h>
 #include <stdbool.h>
 #include "PS2HostCmds.h"

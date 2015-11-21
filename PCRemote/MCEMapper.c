@@ -6,25 +6,59 @@
  */ 
 
 #include "MCEMapper.h"
+#include <util/delay.h>
 #include "MCEMapperHelper.h"
 #include "MCECodes.h"
 #include "../PS2KBDevice/PS2KBDevice.h"
 #include "../PS2KBDevice/PS2DevCodes.h"
 
+#ifndef PWR_BTN_PORT
+#	define PWR_BTN_PORT PORTD
+#endif
+
+#ifndef PWR_BTN_DDR
+#	define PWR_BTN_DDR DDRD
+#endif
+
+#ifndef PWR_BTN_BIT
+#	define PWR_BTN_BIT PORTD7
+#endif
+
+#ifndef PWR_SENSE_PIN
+#	define PWR_SENSE_PIN PIND
+#endif
+
+static void _press_pwr_btn()
+{
+	PWR_BTN_DDR |= _BV(PWR_BTN_BIT); // set the pin to output
+	PWR_BTN_PORT &= ~_BV(PWR_BTN_BIT); // set the pin to low
+	_delay_ms(1000); // keep the button "pressed for 1 sec
+	PWR_BTN_DDR &= ~_BV(PWR_BTN_BIT); // disable the ouput
+	PWR_BTN_PORT &= ~_BV(PWR_BTN_BIT); // set the pin to tri-state
+}
+
 void send_kbcode_for_ir(unsigned long ircode, MK_OR_BK mk_or_bk)
 {
+	if (bit_is_clear(PWR_SENSE_PIN, PWR_SENSE_BIT))
+	{
+		if (ircode == MCEH_POWER_ON_1 || ircode == MCEH_POWER_ON_2 || ircode == MCEH_POWER_TOGGLE_1 || ircode == MCEH_POWER_TOGGLE_2)
+		{
+			_press_pwr_btn();
+		}
+		else
+		{
+			return;
+		}
+	}
     switch (ircode)
     {
         // power buttons
-        case MCEH_POWER_ON_1:
-        case MCEH_POWER_ON_2:
-            SEND_EXT_CODE(PS2DC_PWR_WAKE_EXT, mk_or_bk);
         case MCEH_POWER_OFF_1:
         case MCEH_POWER_OFF_2:
-            SEND_EXT_CODE(PS2DC_PWR_SLEEP_EXT, mk_or_bk);
         case MCEH_POWER_TOGGLE_1:
         case MCEH_POWER_TOGGLE_2:
-            SEND_EXT_CODE(PS2DC_PWR_POWER_EXT, mk_or_bk);
+            _press_pwr_btn();
+			return;
             
         // cursor keys
         case MCEH_DIR_UP_1:

@@ -8,6 +8,7 @@
 
 #ifndef MCEMAPPERHELPER_H_
 #define MCEMAPPERHELPER_H_
+#include "conf.h"
 #include "MCEMapper.h"
 
 #define SEND_CODE(code, mk_or_bk) { \

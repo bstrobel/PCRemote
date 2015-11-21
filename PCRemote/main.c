@@ -4,10 +4,7 @@
  * Created: 22.10.2015 15:32:58
  * Author : Bernd
  */ 
-#define F_CPU 8000000UL
-#define LOG_BUF_SIZE 512
-#define AUTO_REPEAT_LIMIT 4
-
+#include "conf.h"
 #include <avr/io.h>
 #include <util/delay.h>
 #include <stdio.h>
@@ -15,6 +12,18 @@
 #include "../PS2KBDevice/PS2KBDevice.h"
 #include "../IRReceiver/IRReceiver.h"
 #include "../../DebugLogger/DebugLogger/debug_logger.h"
+
+#ifndef PWR_SENSE_PORT
+#	define PWR_SENSE_PORT PORTD
+#endif
+
+#ifndef PWR_SENSE_DDR
+#	define PWR_SENSE_DDR DDRD
+#endif
+
+#ifndef PWR_SENSE_BIT
+#	define PWR_SENSE_BIT PORTD6
+#endif
 
 volatile decode_results_t decode_results;
 static char strbuf1[10];
@@ -41,9 +50,12 @@ static void send_break_for_ircode(unsigned long ircode)
 
 int main(void)
 {
+	OSCCAL = 0x46; // This gets the clock as close to 8MHz as possible.
 	init_debug_log();
 	enableIRRecv();
 	setup_ps2device(PINB2, PINB1);
+	PWR_SENSE_DDR &= _BV(PWR_SENSE_BIT); // set PWR SENSE to input
+	PWR_SENSE_PORT &= _BV(PWR_SENSE_BIT); // disable pull-up
     while (1) 
     {
 		do_ps2device_work();

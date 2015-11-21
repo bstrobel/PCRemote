@@ -8,6 +8,7 @@
 
 #ifndef MCEMAPPER_H_
 #define MCEMAPPER_H_
+#include "conf.h"
 
 typedef enum { MAKE, BREAK } MK_OR_BK;
 
