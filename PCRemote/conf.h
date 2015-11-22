@@ -10,7 +10,6 @@
 #define CONF_H_
 
 #define F_CPU 8000000UL
-#define LOG_BUF_SIZE 512
 #define AUTO_REPEAT_LIMIT 4
 
 

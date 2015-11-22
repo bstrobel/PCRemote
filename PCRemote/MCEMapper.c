@@ -115,15 +115,35 @@ void send_kbcode_for_ir(unsigned long ircode, MK_OR_BK mk_or_bk)
         case MCEH_VOL_DOWN_1:
         case MCEH_VOL_DOWN_2:
             SEND_EXT_CODE(PS2DC_MM_VOL_DOWN_EXT, mk_or_bk);
+			
         // special mappings
+		case MCEH_INFO_1:
+		case MCEH_INFO_2:
+			SEND_EXT_CODE(PS2DC_APPS_EXT, mk_or_bk);
+			
         case MCEH_GUIDE_1:
         case MCEH_GUIDE_2:
             SEND_2KEY_CODE(PS2DC_R_GUI_EXT, 1, PS2DC_1, 0, mk_or_bk);
 
-        // F2 key to be able to enter BIOS Setup
-        case MCEH_RED_1:
-        case MCEH_RED_2:
-            SEND_CODE(PS2DC_F2, mk_or_bk);
+		case MCEH_MEDIA_1:
+		case MCEH_MEDIA_2:
+            SEND_2KEY_CODE(PS2DC_R_GUI_EXT, 1, PS2DC_2, 0, mk_or_bk);
+			
+		case MCEH_RED_1:
+		case MCEH_RED_2:
+			SEND_2KEY_CODE(PS2DC_L_ALT, 0, PS2DC_F4, 0, mk_or_bk); // Alt-F4
+			
+		case MCEH_GREEN_1:
+		case MCEH_GREEN_2:
+			SEND_CODE(PS2DC_TAB, mk_or_bk);
+
+		case MCEH_YELLOW_1:
+		case MCEH_YELLOW_2:			
+			SEND_CODE(PS2DC_BKSP, mk_or_bk);
+			
+		case MCEH_BLUE_1:
+		case MCEH_BLUE_2:
+			SEND_EXT_CODE(PS2DC_L_GUI_EXT, mk_or_bk); // Win key
         default:
             return;
     }
