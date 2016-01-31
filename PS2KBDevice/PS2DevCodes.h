@@ -60,9 +60,9 @@
 #define PS2DC_MINUS 0x4E
 #define PS2DC_EQUALS 0x55
 #define PS2DC_BACKSLASH 0x5D
-#define PS2DC_BKSP 0x2B
-#define PS2DC_SPACE 0x34
-#define PS2DC_TAB 0x33
+#define PS2DC_BKSP 0x66
+#define PS2DC_SPACE 0x29
+#define PS2DC_TAB 0x0D
 #define PS2DC_CAPS 0x58
 #define PS2DC_L_SHIFT 0x12
 #define PS2DC_L_CTRL 0x14
