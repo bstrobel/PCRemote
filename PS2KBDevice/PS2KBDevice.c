@@ -189,7 +189,7 @@ static bool _send_char_to_host( uint8_t c) {
 	if (!c || !_ps2dev_enabled) { // since the buffer returns 0x0 when empty
 		return false;
 	}
-	while(_trans_in_progress) {}
+	while(_trans_in_progress || _recv_in_progress) {} // Wait for the situation to become quiet
 	_trans_in_progress = true;
 	_char_to_send = c;
 	_char_to_send_parity = _parity(c);
@@ -198,9 +198,9 @@ static bool _send_char_to_host( uint8_t c) {
 	}
 	_conf_pins_output();
 	PORTB &= ~_BV(_data_pin_port_b); // send the start bit (LOW)
-	PORTB &= ~_BV(_clock_pin_port_b);
-	_bit_index = BIT_0_INDEX;
+	PORTB &= ~_BV(_clock_pin_port_b); // pull clock LOW
 	_clock_state = 0;
+	_bit_index = BIT_0_INDEX;
 	_enable_timer0();
 	while(_trans_in_progress) {
 		//block until transmission to finish
@@ -210,38 +210,44 @@ static bool _send_char_to_host( uint8_t c) {
 	return x;
 }
 
+// this interrupt is fired each time the level on the clock or data pin has been changed by the host
 ISR(PCINT0_vect) {
 	uint8_t p = PINB; // save the value of the interrupt source pins
-	if (bit_is_clear(p,_clock_pin_port_b) && bit_is_clear(p,_data_pin_port_b)) {
-		_host_req_dev_rcv = 1; // get ready for the action
-	} else if (bit_is_set(p,_clock_pin_port_b) && bit_is_clear(p,_data_pin_port_b) && _host_req_dev_rcv && !_recv_in_progress) {
+	if (bit_is_clear(p,_clock_pin_port_b) && bit_is_clear(p,_data_pin_port_b)) { // host wants to send us something
+		_host_req_dev_rcv = true; // get ready for the action
+	} else if (
+		bit_is_set(p,_clock_pin_port_b) 
+		&& bit_is_clear(p,_data_pin_port_b) 
+		&& _host_req_dev_rcv 
+		&& !_recv_in_progress) { // host has released clock (clock has been pulled H by the pullups), this means we have to start a receive process
 		DISABLE_PCINT0S;
 		DISABLE_PCINT_DATA;
 		DISABLE_PCINT_CLK;
 		_clock_state = 1;
 		_bit_index = BIT_0_INDEX;
-		_host_req_dev_rcv = 0;
-		_recv_in_progress = 1;
+		_host_req_dev_rcv = false;
+		_recv_in_progress = true;
 		_enable_timer0();
 	} else {
 		// reset the state
-		_host_req_dev_rcv = 0;
+		_host_req_dev_rcv = false;
 	}
 }
 
 ISR(TIMER0_COMPA_vect) {
 	if (_clock_state) {
-		if (bit_is_set(PINB,_clock_pin_port_b)) {
+		// we - the device - need to check if the host has pulled the clock LOW
+		if (bit_is_set(PINB,_clock_pin_port_b)) {  // Clock pin was set to H by us in the previous cycle
 			if (_recv_in_progress) {
 				if (_bit_index == BIT_ACK_INDEX) {
 					DDRB |= _BV(_data_pin_port_b); //switch data to output
 					PORTB &= ~_BV(_data_pin_port_b); //set to LOW - this is the ACK bit
 				}
 				if (_bit_index <0) {
-					_host_req_dev_rcv = 0;
+					_host_req_dev_rcv = false;
 					_disable_timer0();
 					_conf_pins_input();
-					_recv_in_progress = 0;
+					_recv_in_progress = false;
 					_recv_buf_overflow = !_put_char_into_rcv_buf(_rcvd_char);
 				} else {
 					_conf_clock_out_low(); // don't bring the clock line low after everything has been received!
@@ -251,18 +257,17 @@ ISR(TIMER0_COMPA_vect) {
 				if (_bit_index < 0) {
 					_disable_timer0();
 					_conf_pins_input();
-					_trans_in_progress = 0;
+					_trans_in_progress = false;
 				} else {
 					_conf_clock_out_low();
 				}
 			}
-		} else {
-			// host has pulled clock low -> bail out and get ready to receive something
+		} else { // host has pulled clock low -> bail out and get ready to receive something
 			_disable_timer0();
 			_conf_pins_input();
-			_trans_in_progress = 0;
-			_recv_in_progress = 0;
-			_host_req_dev_rcv = 0;
+			_trans_in_progress = false;
+			_recv_in_progress = false;
+			_host_req_dev_rcv = true;
 		}
 	} else {
 		// we're just after the rising edge of the clock -> do something
@@ -402,6 +407,8 @@ void do_ps2device_work() {
 				debug_log(">LED v\r\n");
 			}
 			_next_byte_led = _next_byte_typematic_rate = false;
+			_send_char_to_host(PS2DEVICE_CMD_ACK);
+			debug_log("<ACK\r\n");
 			return;
 		}
 		switch (c) {
@@ -417,6 +424,9 @@ void do_ps2device_work() {
 				debug_log("<ACK\r\n");
 				continue;
 			case PS2HOST_CMD_RESET:
+				_ps2dev_enabled = true;
+				_next_byte_led = false;
+				_next_byte_typematic_rate = false;
 				debug_log(">Reset\r\n");
 				_send_char_to_host(PS2DEVICE_CMD_ACK);
 				debug_log("<ACK\r\n");
@@ -447,7 +457,9 @@ void do_ps2device_work() {
 				debug_log("<ACK\r\n");
 				continue;
 			case PS2HOST_CMD_READ_ID:
-				debug_log(">SendId\r\n");
+				debug_log(">ReadId\r\n");
+				_send_char_to_host(PS2DEVICE_CMD_ACK);
+				debug_log("<ACK\r\n");
 				_send_char_to_host(PS2DEVICE_ID_1);
 				debug_log("<ID1\r\n");
 				_send_char_to_host(PS2DEVICE_ID_2);
@@ -459,14 +471,17 @@ void do_ps2device_work() {
 				debug_log("<ACK\r\n");
 				return;
 			case PS2HOST_CMD_DISABLE:
-				_ps2dev_enabled = false;
-				_next_byte_led = _next_byte_typematic_rate = false;
 				debug_log(">Disable\r\n");
 				_send_char_to_host(PS2DEVICE_CMD_ACK);
 				debug_log("<ACK\r\n");
+				_ps2dev_enabled = false;
+				_next_byte_led = false;
+				_next_byte_typematic_rate = false;
 				return;
 			case PS2HOST_CMD_ENABLE:
 				_ps2dev_enabled = true;
+				_next_byte_led = false;
+				_next_byte_typematic_rate = false;
 				debug_log(">Enable\r\n");
 				_send_char_to_host(PS2DEVICE_CMD_ACK);
 				debug_log("<ACK\r\n");

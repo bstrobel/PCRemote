@@ -59,11 +59,6 @@ void send_kbcode_for_ir(unsigned long ircode, MK_OR_BK mk_or_bk)
         case MCEH_POWER_TOGGLE_2:
             _press_pwr_btn();
 			return;
-
-		case MCEH_MUSIC_1:
-		case MCEH_MUSIC_2:
-			// Kodi: Audio Delay Control = A
-			SEND_CODE(PS2DC_A, mk_or_bk);
             
         case MCEH_GUIDE_1:
         case MCEH_GUIDE_2:
@@ -76,20 +71,10 @@ void send_kbcode_for_ir(unsigned long ircode, MK_OR_BK mk_or_bk)
 			// Kodi: Info = I
 			SEND_CODE(PS2DC_I, mk_or_bk);
 			
-		case MCEH_TV_1:
-		case MCEH_TV_2:
-			// Kodi: NextSubtitle/Lock preset = L
-			SEND_CODE(PS2DC_L, mk_or_bk);
-			
 		case MCEH_LIVE_TV_1:
 		case MCEH_LIVE_TV_2:
 			// Kodi: OSD = M
 			SEND_CODE(PS2DC_M, mk_or_bk);
-			
-		case MCEH_YELLOW_1:
-		case MCEH_YELLOW_2:
-		// Kodi: Currently playing = N
-			SEND_CODE(PS2DC_N, mk_or_bk);
 		
 		case MCEH_RED_1:
 		case MCEH_RED_2:
@@ -101,11 +86,6 @@ void send_kbcode_for_ir(unsigned long ircode, MK_OR_BK mk_or_bk)
 	        // Kodi: Play = P
 		    SEND_CODE(PS2DC_P, mk_or_bk);
 			
-		case MCEH_MOVIES_1:
-		case MCEH_MOVIES_2:
-			// Kodi: Queue = Q
-			SEND_CODE(PS2DC_Q, mk_or_bk);
-			
 		case MCEH_SUBTITLE_1:
 		case MCEH_SUBTITLE_2:
 			// Kodi: Subtitle = T
@@ -115,11 +95,6 @@ void send_kbcode_for_ir(unsigned long ircode, MK_OR_BK mk_or_bk)
 		case MCEH_MUTE_2:
 			// Kodi: Subtitle Postion Control = Ctrl + T
             SEND_2KEY_CODE(PS2DC_L_CTRL, 0, PS2DC_T, 0, mk_or_bk);
-			
-		case MCEH_TELETEXT_1:
-		case MCEH_TELETEXT_2:
-			// Kodi: Teletext/Music Visualisation Settings = V
-			SEND_CODE(PS2DC_V, mk_or_bk);
 			
 		case MCEH_ASPECT_1:
 		case MCEH_ASPECT_2:
@@ -206,11 +181,6 @@ void send_kbcode_for_ir(unsigned long ircode, MK_OR_BK mk_or_bk)
 			// Kodi: Step forward 10 min = ]
 	        //SEND_CODE(PS2DC_SQ_BRACKET_CLOSE, mk_or_bk);
 			SEND_2KEY_CODE(PS2DC_R_ALT_EXT, 1, PS2DC_9, 0, mk_or_bk);
-			
-		case MCEH_RECORD_1:
-		case MCEH_RECORD_2:
-			// Kodi: Jump to the top of the menu = Home
-			SEND_EXT_CODE(PS2DC_HOME_EXT, mk_or_bk);
 
         // Play control keys
         case MCEH_PAUSE_1:
@@ -230,12 +200,44 @@ void send_kbcode_for_ir(unsigned long ircode, MK_OR_BK mk_or_bk)
         case MCEH_REPLAY_2:
             SEND_EXT_CODE(PS2DC_MM_PREV_EXT, mk_or_bk);
 			
+		case MCEH_TELETEXT_1:
+		case MCEH_TELETEXT_2:
+			// Kodi: Teletext/Music Visualisation Settings = V
+			SEND_CODE(PS2DC_V, mk_or_bk);
+			
+		case MCEH_RECORD_1:
+		case MCEH_RECORD_2:
+			// Kodi: Jump to the top of the menu = Home
+			SEND_EXT_CODE(PS2DC_HOME_EXT, mk_or_bk);
+
+		// --- non Kodi controls ---
+					
 		case MCEH_MEDIA_1:
 		case MCEH_MEDIA_2:
 			// Win + 1 = Starts Kodi
             SEND_2KEY_CODE(PS2DC_R_GUI_EXT, 1, PS2DC_1, 0, mk_or_bk);
 			
 
+		case MCEH_MUSIC_1:
+		case MCEH_MUSIC_2:
+			// Win + 2 = Starts SkyGo
+            SEND_2KEY_CODE(PS2DC_R_GUI_EXT, 1, PS2DC_2, 0, mk_or_bk);
+
+			
+		case MCEH_TV_1:
+		case MCEH_TV_2:
+			// Win + 3
+            SEND_2KEY_CODE(PS2DC_R_GUI_EXT, 1, PS2DC_3, 0, mk_or_bk);
+			
+		case MCEH_MOVIES_1:
+		case MCEH_MOVIES_2:
+			// Win + 4
+            SEND_2KEY_CODE(PS2DC_R_GUI_EXT, 1, PS2DC_4, 0, mk_or_bk);
+			
+		case MCEH_YELLOW_1:
+		case MCEH_YELLOW_2:
+			// Win
+			SEND_EXT_CODE(PS2DC_R_GUI_EXT, mk_or_bk);
 			
         default:
             return;
