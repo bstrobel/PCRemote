@@ -204,11 +204,6 @@ void send_kbcode_for_ir(unsigned long ircode, MK_OR_BK mk_or_bk)
 		case MCEH_TELETEXT_2:
 			// Kodi: Teletext/Music Visualisation Settings = V
 			SEND_CODE(PS2DC_V, mk_or_bk);
-			
-		case MCEH_RECORD_1:
-		case MCEH_RECORD_2:
-			// Kodi: Jump to the top of the menu = Home
-			SEND_EXT_CODE(PS2DC_HOME_EXT, mk_or_bk);
 
 		// --- non Kodi controls ---
 					
@@ -238,6 +233,11 @@ void send_kbcode_for_ir(unsigned long ircode, MK_OR_BK mk_or_bk)
 		case MCEH_YELLOW_2:
 			// Win
 			SEND_EXT_CODE(PS2DC_R_GUI_EXT, mk_or_bk);
+			
+		case MCEH_RECORD_1:
+		case MCEH_RECORD_2:
+			// Alt + F4
+			SEND_2KEY_CODE(PS2DC_L_ALT, 0, PS2DC_F4, 0, mk_or_bk);
 			
         default:
             return;

@@ -343,7 +343,7 @@ END GROUP
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000     0x20e6
+.text           0x00000000     0x20fa
  *(.vectors)
  .vectors       0x00000000       0x68 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/Atmel/ATmega_DFP/1.0.91/gcc/dev/atmega328p/avr5/crtatmega328p.o
                 0x00000000                __vector_default
@@ -438,99 +438,99 @@ END GROUP
  .text._press_pwr_btn
                 0x00000294       0x1c MCEMapper.o
  .text.send_kbcode_for_ir
-                0x000002b0      0xae0 MCEMapper.o
+                0x000002b0      0xaf4 MCEMapper.o
                 0x000002b0                send_kbcode_for_ir
  .text._get_char_from_log_buf.part.0
-                0x00000d90       0x26 C:\Users\Bernd\Documents\Atmel Studio\7.0\DebugLogger\DebugLogger\Release\libDebugLogger.a(debug_logger.o)
+                0x00000da4       0x26 C:\Users\Bernd\Documents\Atmel Studio\7.0\DebugLogger\DebugLogger\Release\libDebugLogger.a(debug_logger.o)
  .text.__vector_19
-                0x00000db6       0x64 C:\Users\Bernd\Documents\Atmel Studio\7.0\DebugLogger\DebugLogger\Release\libDebugLogger.a(debug_logger.o)
-                0x00000db6                __vector_19
+                0x00000dca       0x64 C:\Users\Bernd\Documents\Atmel Studio\7.0\DebugLogger\DebugLogger\Release\libDebugLogger.a(debug_logger.o)
+                0x00000dca                __vector_19
  .text.debug_log
-                0x00000e1a       0x5a C:\Users\Bernd\Documents\Atmel Studio\7.0\DebugLogger\DebugLogger\Release\libDebugLogger.a(debug_logger.o)
-                0x00000e1a                debug_log
+                0x00000e2e       0x5a C:\Users\Bernd\Documents\Atmel Studio\7.0\DebugLogger\DebugLogger\Release\libDebugLogger.a(debug_logger.o)
+                0x00000e2e                debug_log
  .text.init_debug_log
-                0x00000e74       0x12 C:\Users\Bernd\Documents\Atmel Studio\7.0\DebugLogger\DebugLogger\Release\libDebugLogger.a(debug_logger.o)
-                0x00000e74                init_debug_log
+                0x00000e88       0x12 C:\Users\Bernd\Documents\Atmel Studio\7.0\DebugLogger\DebugLogger\Release\libDebugLogger.a(debug_logger.o)
+                0x00000e88                init_debug_log
  .text.__vector_7
-                0x00000e86      0x178 C:\Users\Bernd\Documents\Atmel Studio\7.0\PCRemote\IRReceiver\Release\libIRReceiver.a(IRReceiver.o)
-                0x00000e86                __vector_7
- .text.compare  0x00000ffe       0x28 C:\Users\Bernd\Documents\Atmel Studio\7.0\PCRemote\IRReceiver\Release\libIRReceiver.a(IRReceiver.o)
-                0x00000ffe                compare
+                0x00000e9a      0x178 C:\Users\Bernd\Documents\Atmel Studio\7.0\PCRemote\IRReceiver\Release\libIRReceiver.a(IRReceiver.o)
+                0x00000e9a                __vector_7
+ .text.compare  0x00001012       0x28 C:\Users\Bernd\Documents\Atmel Studio\7.0\PCRemote\IRReceiver\Release\libIRReceiver.a(IRReceiver.o)
+                0x00001012                compare
  .text.decodeHashIRRecv
-                0x00001026      0x106 C:\Users\Bernd\Documents\Atmel Studio\7.0\PCRemote\IRReceiver\Release\libIRReceiver.a(IRReceiver.o)
-                0x00001026                decodeHashIRRecv
+                0x0000103a      0x106 C:\Users\Bernd\Documents\Atmel Studio\7.0\PCRemote\IRReceiver\Release\libIRReceiver.a(IRReceiver.o)
+                0x0000103a                decodeHashIRRecv
  .text.enableIRRecv
-                0x0000112c       0x2e C:\Users\Bernd\Documents\Atmel Studio\7.0\PCRemote\IRReceiver\Release\libIRReceiver.a(IRReceiver.o)
-                0x0000112c                enableIRRecv
+                0x00001140       0x2e C:\Users\Bernd\Documents\Atmel Studio\7.0\PCRemote\IRReceiver\Release\libIRReceiver.a(IRReceiver.o)
+                0x00001140                enableIRRecv
  .text._enable_timer0
-                0x0000115a       0x26 C:\Users\Bernd\Documents\Atmel Studio\7.0\PCRemote\PS2KBDevice\Release\libPS2KBDevice.a(PS2KBDevice.o)
+                0x0000116e       0x26 C:\Users\Bernd\Documents\Atmel Studio\7.0\PCRemote\PS2KBDevice\Release\libPS2KBDevice.a(PS2KBDevice.o)
  .text._disable_timer0
-                0x00001180       0x12 C:\Users\Bernd\Documents\Atmel Studio\7.0\PCRemote\PS2KBDevice\Release\libPS2KBDevice.a(PS2KBDevice.o)
+                0x00001194       0x12 C:\Users\Bernd\Documents\Atmel Studio\7.0\PCRemote\PS2KBDevice\Release\libPS2KBDevice.a(PS2KBDevice.o)
  .text._conf_pins_input
-                0x00001192       0xce C:\Users\Bernd\Documents\Atmel Studio\7.0\PCRemote\PS2KBDevice\Release\libPS2KBDevice.a(PS2KBDevice.o)
+                0x000011a6       0xce C:\Users\Bernd\Documents\Atmel Studio\7.0\PCRemote\PS2KBDevice\Release\libPS2KBDevice.a(PS2KBDevice.o)
  .text._conf_clock_input_high
-                0x00001260       0x3c C:\Users\Bernd\Documents\Atmel Studio\7.0\PCRemote\PS2KBDevice\Release\libPS2KBDevice.a(PS2KBDevice.o)
+                0x00001274       0x3c C:\Users\Bernd\Documents\Atmel Studio\7.0\PCRemote\PS2KBDevice\Release\libPS2KBDevice.a(PS2KBDevice.o)
  .text._conf_clock_out_low
-                0x0000129c       0x36 C:\Users\Bernd\Documents\Atmel Studio\7.0\PCRemote\PS2KBDevice\Release\libPS2KBDevice.a(PS2KBDevice.o)
+                0x000012b0       0x36 C:\Users\Bernd\Documents\Atmel Studio\7.0\PCRemote\PS2KBDevice\Release\libPS2KBDevice.a(PS2KBDevice.o)
  .text._send_char_to_host
-                0x000012d2      0x12e C:\Users\Bernd\Documents\Atmel Studio\7.0\PCRemote\PS2KBDevice\Release\libPS2KBDevice.a(PS2KBDevice.o)
+                0x000012e6      0x12e C:\Users\Bernd\Documents\Atmel Studio\7.0\PCRemote\PS2KBDevice\Release\libPS2KBDevice.a(PS2KBDevice.o)
  .text._reset_state
-                0x00001400       0x64 C:\Users\Bernd\Documents\Atmel Studio\7.0\PCRemote\PS2KBDevice\Release\libPS2KBDevice.a(PS2KBDevice.o)
+                0x00001414       0x64 C:\Users\Bernd\Documents\Atmel Studio\7.0\PCRemote\PS2KBDevice\Release\libPS2KBDevice.a(PS2KBDevice.o)
  .text.__vector_3
-                0x00001464      0x12a C:\Users\Bernd\Documents\Atmel Studio\7.0\PCRemote\PS2KBDevice\Release\libPS2KBDevice.a(PS2KBDevice.o)
-                0x00001464                __vector_3
+                0x00001478      0x12a C:\Users\Bernd\Documents\Atmel Studio\7.0\PCRemote\PS2KBDevice\Release\libPS2KBDevice.a(PS2KBDevice.o)
+                0x00001478                __vector_3
  .text.__vector_14
-                0x0000158e      0x2c6 C:\Users\Bernd\Documents\Atmel Studio\7.0\PCRemote\PS2KBDevice\Release\libPS2KBDevice.a(PS2KBDevice.o)
-                0x0000158e                __vector_14
+                0x000015a2      0x2c6 C:\Users\Bernd\Documents\Atmel Studio\7.0\PCRemote\PS2KBDevice\Release\libPS2KBDevice.a(PS2KBDevice.o)
+                0x000015a2                __vector_14
  .text.setup_ps2device
-                0x00001854        0xc C:\Users\Bernd\Documents\Atmel Studio\7.0\PCRemote\PS2KBDevice\Release\libPS2KBDevice.a(PS2KBDevice.o)
-                0x00001854                setup_ps2device
+                0x00001868        0xc C:\Users\Bernd\Documents\Atmel Studio\7.0\PCRemote\PS2KBDevice\Release\libPS2KBDevice.a(PS2KBDevice.o)
+                0x00001868                setup_ps2device
  .text.do_ps2device_work
-                0x00001860      0x216 C:\Users\Bernd\Documents\Atmel Studio\7.0\PCRemote\PS2KBDevice\Release\libPS2KBDevice.a(PS2KBDevice.o)
-                0x00001860                do_ps2device_work
+                0x00001874      0x216 C:\Users\Bernd\Documents\Atmel Studio\7.0\PCRemote\PS2KBDevice\Release\libPS2KBDevice.a(PS2KBDevice.o)
+                0x00001874                do_ps2device_work
  .text.add_char_to_send_buf
-                0x00001a76       0x38 C:\Users\Bernd\Documents\Atmel Studio\7.0\PCRemote\PS2KBDevice\Release\libPS2KBDevice.a(PS2KBDevice.o)
-                0x00001a76                add_char_to_send_buf
+                0x00001a8a       0x38 C:\Users\Bernd\Documents\Atmel Studio\7.0\PCRemote\PS2KBDevice\Release\libPS2KBDevice.a(PS2KBDevice.o)
+                0x00001a8a                add_char_to_send_buf
  .text.libgcc.mul
-                0x00001aae       0x20 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_mulsi3.o)
-                0x00001aae                __mulsi3
- .text.libgcc   0x00001ace        0xc c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_tablejump2.o)
-                0x00001ace                __tablejump2__
+                0x00001ac2       0x20 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_mulsi3.o)
+                0x00001ac2                __mulsi3
+ .text.libgcc   0x00001ae2        0xc c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_tablejump2.o)
+                0x00001ae2                __tablejump2__
  .text.libgcc.mul
-                0x00001ada       0x16 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_muluhisi3.o)
-                0x00001ada                __muluhisi3
+                0x00001aee       0x16 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_muluhisi3.o)
+                0x00001aee                __muluhisi3
  .text.libgcc.mul
-                0x00001af0       0x1e c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_umulhisi3.o)
-                0x00001af0                __umulhisi3
+                0x00001b04       0x1e c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_umulhisi3.o)
+                0x00001b04                __umulhisi3
  .text.avr-libc
-                0x00001b0e       0x44 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(sprintf.o)
-                0x00001b0e                sprintf
+                0x00001b22       0x44 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(sprintf.o)
+                0x00001b22                sprintf
  .text.avr-libc
-                0x00001b52      0x3c2 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(vfprintf_std.o)
-                0x00001b52                vfprintf
+                0x00001b66      0x3c2 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(vfprintf_std.o)
+                0x00001b66                vfprintf
  .text.avr-libc
-                0x00001f14       0x16 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(strnlen_P.o)
-                0x00001f14                strnlen_P
+                0x00001f28       0x16 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(strnlen_P.o)
+                0x00001f28                strnlen_P
  .text.avr-libc
-                0x00001f2a       0x16 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(strnlen.o)
-                0x00001f2a                strnlen
+                0x00001f3e       0x16 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(strnlen.o)
+                0x00001f3e                strnlen
  .text.avr-libc
-                0x00001f40       0x78 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(fputc.o)
-                0x00001f40                fputc
+                0x00001f54       0x78 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(fputc.o)
+                0x00001f54                fputc
  .text.avr-libc
-                0x00001fb8       0xbc c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(ultoa_invert.o)
-                0x00001fb8                __ultoa_invert
+                0x00001fcc       0xbc c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(ultoa_invert.o)
+                0x00001fcc                __ultoa_invert
  .text.libgcc.prologue
-                0x00002074       0x38 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_prologue.o)
-                0x00002074                __prologue_saves__
+                0x00002088       0x38 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_prologue.o)
+                0x00002088                __prologue_saves__
  .text.libgcc.prologue
-                0x000020ac       0x36 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_epilogue.o)
-                0x000020ac                __epilogue_restores__
-                0x000020e2                . = ALIGN (0x2)
+                0x000020c0       0x36 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_epilogue.o)
+                0x000020c0                __epilogue_restores__
+                0x000020f6                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x000020e2        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
-                0x000020e2                _exit
-                0x000020e2                exit
+ .fini9         0x000020f6        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
+                0x000020f6                _exit
+                0x000020f6                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -549,11 +549,11 @@ END GROUP
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x000020e2        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
+ .fini0         0x000020f6        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
  *(.fini0)
-                0x000020e6                _etext = .
+                0x000020fa                _etext = .
 
-.data           0x00800100       0xcc load address 0x000020e6
+.data           0x00800100       0xcc load address 0x000020fa
                 0x00800100                PROVIDE (__data_start, .)
  *(.data)
  *(.data*)
@@ -635,8 +635,8 @@ END GROUP
  COMMON         0x008004cd        0xa main.o
                 0x008004cd                decode_results
                 0x008004d7                PROVIDE (__bss_end, .)
-                0x000020e6                __data_load_start = LOADADDR (.data)
-                0x000021b2                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x000020fa                __data_load_start = LOADADDR (.data)
+                0x000021c6                __data_load_end = (__data_load_start + SIZEOF (.data))
 
 .noinit         0x008004d7        0x0
                 [!provide]                PROVIDE (__noinit_start, .)
